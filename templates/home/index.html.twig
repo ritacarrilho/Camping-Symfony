@@ -1,0 +1,104 @@
+{%extends "base.html.twig" %} 
+{% block title %}Fabulous Camping{% endblock %}
+
+{% block body %}
+<main>
+    <div>
+        {{ include("template_part/menu.html.twig", {pp: 'menu'} )}}
+    </div>
+
+    <div class="bg-image text-center" 
+        style="background-image: url(images/people-ga.jpg);  
+                height: 550px;
+                width:100%;
+                background-size: cover;
+                background-position: center;
+                color: #00341c;" > 
+        <h2 class="pt-5"><strong>Welcome to the FAbuLous CamPiNg</strong></h2>
+    </div>
+
+    <div class="mt-5 mb-5">
+        <div> 
+            <p>Hello stranger! Welcome to the best camping facility in the world</p>
+        </div>
+
+        <section class="container mt-5 mb-5"> 
+            <h3>Seasons and Prices</h3>
+            <p>We are open from 5th May to 10th October.</p>
+            <div class="card mt-2">
+                <div class="card-header">High Season</div>
+                <div class="card-body ">
+                    <blockquote class="blockquote mb-0">
+                    <p>The high season goes from 21th June to 31st October.</p>
+                    <footer class="blockquote-footer">15% Taxes added to the price</footer>
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="card mt-2 mb-5">
+                <div class="card-header">Low Season</div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                    <p>The low season goes from 5th May to 20th June and from 1st September to 10th October.</p>
+                    <footer class="blockquote-footer">Normal Taxes</footer>
+                    </blockquote>
+                </div>
+            </div>
+
+            <h5 class="mt-3">Discounts</h5>
+            <p>Enjoy our 5% discount for each set of 7 days.</p>
+        </section>
+
+        <section class="mt-5 mb-5" style="background-color: #00341c; width:100%; height:450px;"> 
+            <div class="container">
+                <h3 class="mb-2 pt-5 text-white">Our Taxes</h3>
+
+                <div class="d-flex flex-row g-5 align-items-center">
+                    <div>
+                        <h5 class="text-white pb-2">Pool Taxes</h5>
+            
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Adults</h5>
+                                <p class="card-text">1.50€</p>
+                            </div>
+                        </div>
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Kids</h5>
+                                <p class="card-text">1.00€</p>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    <div style="padding-left: 25px;">
+                        <h5 class="text-white pb-2">Daily Taxes</h5>
+                    
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Adults</h5>
+                                <p class="card-text">0.60€</p>
+                            </div>
+                        </div>
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Kids</h5>
+                                <p class="card-text">0.60€</p>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </section>   
+
+        <section class="container mt-5 mb-5"> 
+            <p>Don't wast time, book it now and enjoy a good and quiet time with your family, friend or even by yourself!</p>
+       </section>
+
+
+
+    </div> 
+</main>
+    {{ include("template_part/footer.html.twig", {pp: 'footer'} )}}
+{% endblock %}
