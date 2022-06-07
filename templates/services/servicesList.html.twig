@@ -1,0 +1,62 @@
+    <section class="mt-3">
+        <h2 style="color: #11663f">Our services</h2>
+
+        <div class="container d-flex flex-row justify-content-between">
+            {# {% for message in app.flashes('success') %}
+                <div class="row d-flex flex-row justify-content mb-2">
+                    <div class="alert alert-success">{{ message }}</div>
+                </div>
+            {% endfor %} #}
+            
+            <div>
+            <h4 class="mt-5">Caravans</h4>
+            <div class="column justify-content-evenly">
+                {% for service in services %}
+                {% if service.label == 'Caravan' %}
+                    <div class="card mb-3" style="width: 18rem;">
+                        <div class="card-body">
+                            {# <h5 class="card-title">{{ service.label }}</h5> #}
+                            <h6 class="card-subtitle mb-2 text-muted">{{ service.capacity }} People</h6>
+                            <p class="card-text">{{ service.dailyPrice }}€ per day</p>
+                        </div>
+                    </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            </div>
+
+            <div>
+            <h4 class="mt-5">Mobile-Homes</h4>
+            <div class="column justify-content-evenly">
+                {% for service in services %}
+                {% if service.label == 'Mobile-Home' %}
+                    <div class="card mb-3" style="width: 18rem;">
+                        <div class="card-body">
+                            {# <h5 class="card-title">{{ service.label }}</h5> #}
+                            <h6 class="card-subtitle mb-2 text-muted">{{ service.capacity }} People</h6>
+                            <p class="card-text">{{ service.dailyPrice }}€ per day</p>
+                        </div>
+                    </div>
+                {% endif %} 
+                {% endfor %}
+            </div>
+            </div>
+
+            <div>
+            <h4 class="mt-5">Space for tents</h4>
+            <div class="column justify-content-evenly">
+                {% for service in services %}
+                {% if service.label == 'space' %}
+                    <div class="card mb-3" style="width: 18rem;">
+                        <div class="card-body">
+                            {# <h5 class="card-title">{{ service.label }}</h5> #}
+                            <h6 class="card-subtitle mb-2 text-muted">{{ service.capacity }} m<sup>2</sup></h6>
+                            <p class="card-text">{{ service.dailyPrice }}€ per day</p>
+                        </div>
+                    </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+        </section>

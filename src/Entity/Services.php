@@ -23,7 +23,7 @@ class Services
     private $label;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="integer")
      */
     private $perDay;
 
@@ -49,9 +49,11 @@ class Services
         return $this;
     }
 
-    public function getPerDay(): ?int
+    public function getPerDay(): ?float
     {
-        return $this->perDay;
+        $convert_euros = $this->perDay / 100;
+
+        return $convert_euros;
     }
 
     public function setPerDay(int $perDay): self
