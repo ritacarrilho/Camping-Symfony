@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220607123738 extends AbstractMigration
+final class Version20220608092032 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -26,7 +26,7 @@ final class Version20220607123738 extends AbstractMigration
         $this->addSql('CREATE TABLE rental_type (id INT AUTO_INCREMENT NOT NULL, label VARCHAR(255) NOT NULL, capacity INT NOT NULL, daily_price DOUBLE PRECISION NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE rentals (id INT AUTO_INCREMENT NOT NULL, owner_id_id INT NOT NULL, type_id_id INT NOT NULL, title VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, reference INT NOT NULL, picture VARCHAR(100) NOT NULL, INDEX IDX_35ACDB488FDDAB70 (owner_id_id), INDEX IDX_35ACDB48714819A0 (type_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE reservations (id INT AUTO_INCREMENT NOT NULL, rental_id_id INT NOT NULL, client_name VARCHAR(255) NOT NULL, checkin DATE NOT NULL, checkout DATE NOT NULL, adults_nbr INT NOT NULL, kids_nbr INT NOT NULL, kids_pool INT NOT NULL, adults_pool INT NOT NULL, year_save TINYINT(1) NOT NULL, INDEX IDX_4DA239E4AF10B8 (rental_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE services (id INT AUTO_INCREMENT NOT NULL, label VARCHAR(150) NOT NULL, per_day DOUBLE PRECISION NOT NULL, consumer_type VARCHAR(100) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE services (id INT AUTO_INCREMENT NOT NULL, label VARCHAR(150) NOT NULL, per_day INT NOT NULL, consumer_type VARCHAR(100) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, owner_id_id INT NOT NULL, email VARCHAR(200) NOT NULL, password VARCHAR(255) NOT NULL, role VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D6498FDDAB70 (owner_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE invoices ADD CONSTRAINT FK_6A2F2F953C3B4EF0 FOREIGN KEY (reservation_id_id) REFERENCES reservations (id)');
         $this->addSql('ALTER TABLE invoices_info ADD CONSTRAINT FK_DB18D4B4429ECEE2 FOREIGN KEY (invoice_id_id) REFERENCES invoices (id)');

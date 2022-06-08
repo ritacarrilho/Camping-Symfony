@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Owners;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\RentalType;
@@ -17,6 +18,15 @@ class AppFixtures extends Fixture
 
         $faker = Faker\Factory::create('en_EN'); // call package Faker, object Factory
 
+        $this->loadServices($manager);
+        $this->loadPartners($manager, $faker);
+
+        $manager->flush();
+    }
+
+// SERVICES
+    public function loadServices($manager)
+    {
         $rental_type = [
             ['Caravan', 2, 15],
             ['Caravan', 4, 18],
@@ -35,7 +45,6 @@ class AppFixtures extends Fixture
             ['Daily Tax', 35, 'Kids'],
             ['Daily Tax', 60, 'Adults']
         ];
-
 
         // RENTALTYPE
         for($i=0; $i < count($rental_type); $i++) {
@@ -56,7 +65,35 @@ class AppFixtures extends Fixture
 
             $manager->persist($service);
         }
-
-        $manager->flush();
     }
+
+// PARTNERS/OWNERS
+    public function loadPartners($manager, $faker)
+    {
+        for($i=0; $i < 10; $i++) {
+            $partner = new Owners();
+            $partner->setFirstName($faker->firstName)
+                    ->setLastName($faker->lastName)
+                    ->setAddress($faker->address)
+                    ->setContractNumber(rand())
+                    ->setEndDate($faker->dateTimeBetween('now', '+5 years'));
+        
+            $manager->persist($partner);
+        }
+    }
+
+// USERS
+public function loadUsers($manager, $faker)
+{
+    for($i=0; $i < 10; $i++) {
+        $partner = new Owners();
+        $partner->setFirstName($faker->firstName)
+                ->setLastName($faker->lastName)
+                ->setAddress($faker->address)
+                ->setContractNumber(rand())
+                ->setEndDate($faker->dateTimeBetween('now', '+5 years'));
+    
+        $manager->persist($partner);
+    }
+}
 }
