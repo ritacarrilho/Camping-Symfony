@@ -1,0 +1,19 @@
+{%extends "base.html.twig" %} 
+{% block title %}Our Services{% endblock %}
+
+{% block body %}
+    <div>        
+        {{ include("template_part/menu.html.twig", {pp: 'menu'} )}}
+    </div>
+
+    <div class="container">
+
+    {{ include("rental/rentalsList.html.twig", {pp: 'rentals'} )}}
+
+    </div>    
+
+
+        
+    
+    {{ include("template_part/footer.html.twig", {pp: 'footer'} )}}
+{% endblock %}

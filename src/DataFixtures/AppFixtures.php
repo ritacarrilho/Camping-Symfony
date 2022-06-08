@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Owners;
+use App\Entity\Rentals;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\RentalType;
@@ -32,11 +33,12 @@ class AppFixtures extends Fixture
 
         $this->loadServices($manager);
         $this->loadPartners($manager, $faker);
+        $this->loadRentals($manager, $faker);
 
         $manager->flush();
     }
 
-// SERVICES
+// --------------------- SERVICES
     public function loadServices($manager)
     {
         $rental_type = [
@@ -66,6 +68,9 @@ class AppFixtures extends Fixture
                     ->setdailyPrice($rental_type[$i][2]);
 
             $manager->persist($rental); // generate an object, keep it in memory in a generic array
+        
+            $this->addReference('rental-' . $i, $rental);
+
         }
 
         // SERVICES
@@ -79,12 +84,24 @@ class AppFixtures extends Fixture
         }
     }
 
-// PARTNERS/OWNERS
+// ----------------- PARTNERS/OWNERS
     public function loadPartners($manager, $faker)
     {
+        $admin_owner = new Owners();
+
+        $admin_owner->setFirstName('Fabulous')
+                    ->setLastName('Camping')
+                    ->setAddress($faker->address)
+                    ->setContractNumber(0)
+                    ->setEndDate($faker->dateTimeBetween('now', '+80 years'));
+        
+        $this->addReference('partner-' . 1, $admin_owner);
+
+        $manager->persist($admin_owner);
+
         $partners_number = 10;
 
-        for($i=0; $i < $partners_number; $i++) {
+        for($i=1; $i <= $partners_number; $i++) {
             $partner = new Owners();
             $partner->setFirstName($faker->firstName)
                     ->setLastName($faker->lastName)
@@ -92,20 +109,99 @@ class AppFixtures extends Fixture
                     ->setContractNumber(rand())
                     ->setEndDate($faker->dateTimeBetween('now', '+5 years'));
         
-            $this->addReference('partner-' . $i, $partner);
+            $this->addReference('partner-' . ($i+1), $partner);
 
             $manager->persist($partner);
         }
     
 // USERS - relation one to one
-        for($j=0; $j < $partners_number; $j++) {
+        $admin_user = new User();
+
+        $admin_user->setEmail('fabulous_camping@gmail.com')
+        ->setRole("ROLE_ADMIN")
+        ->setPassword($this->pass_hasher->hashPassword($admin_user, 'admin'))
+        ->setOwnerId($this->getReference('partner-'. 1));
+        
+        $manager->persist( $admin_user);  
+
+
+        for($j=1; $j <= $partners_number; $j++) {
             $user = new User();
             $user->setEmail($faker->email)
                 ->setRole("ROLE_USER")
                 ->setPassword($this->pass_hasher->hashPassword($user, $faker->password))
-                ->setOwnerId($this->getReference(('partner-'. $j)));
+                ->setOwnerId($this->getReference(('partner-'. ($j+1) )));
                 
                 $manager->persist( $user);  
         }   
     } 
+
+// ------------ RENTALS
+    public function loadRentals($manager, $faker)
+    {
+        $emplacements_nb = 30;
+        $private_mh = 30;
+        $camping_mh = 20;
+        $caravans = 10;
+
+        // $random_caravans = rand(0, 2);
+        // $random_mh = rand(3, 6);
+        // $random_spaces = rand(7, 8);
+
+// EMPLACEMENTS        
+        for($i=0; $i < $emplacements_nb; $i++) {
+            $emplacements = new Rentals();
+
+            $emplacements->setOwnerId($this->getReference('partner-' . 1))
+                    ->setTypeId($this->getReference(('rental-'. rand(7, 8))))
+                    ->setTitle('Space '. $faker->word )
+                    ->setDescription($faker->sentence)
+                    ->setReference(rand(1, 30))
+                    ->setPicture($faker->imageUrl($width = 640, $height = 480));
+
+            $manager->persist($emplacements);
+        }
+
+//MOBILE HOMES CAMPING
+        for($j=0; $j < $camping_mh; $j++) {
+            $mh_camping = new Rentals();
+
+            $mh_camping->setOwnerId($this->getReference('partner-' . 1))
+                    ->setTypeId($this->getReference(('rental-'. rand(3, 6) )))
+                    ->setTitle('Mobile-Home '. $faker->word )
+                    ->setDescription($faker->sentence)
+                    ->setReference(rand(31, 60))
+                    ->setPicture($faker->imageUrl($width = 640, $height = 480));
+
+            $manager->persist($mh_camping);
+        }
+
+//PRIVATE MOBILE HOMES
+        for($l=0; $l < $private_mh; $l++) {
+            $mh_private = new Rentals();
+
+            $mh_private->setOwnerId($this->getReference('partner-' . rand(2, 11)))
+                    ->setTypeId($this->getReference(('rental-'. rand(3, 6) )))
+                    ->setTitle('Mobile-Home '. $faker->word )
+                    ->setDescription($faker->sentence)
+                    ->setReference(rand(31, 60))
+                    ->setPicture($faker->imageUrl($width = 640, $height = 480));
+
+            $manager->persist($mh_private);
+        }
+
+//CARAVANS
+        for($h=0; $h < $caravans; $h++) {
+            $caravans_camping = new Rentals();
+
+            $caravans_camping->setOwnerId($this->getReference('partner-' . 1))
+                ->setTypeId($this->getReference(('rental-'. rand(0, 2) )))
+                ->setTitle('Caravan '. $faker->word )
+                ->setDescription($faker->sentence)
+                ->setReference(rand(61, 200))
+                ->setPicture($faker->imageUrl($width = 640, $height = 480));
+
+            $manager->persist($caravans_camping);
+        }
+     }
 }

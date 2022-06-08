@@ -40,12 +40,6 @@ class Rentals
     private $picture;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Owners::class, inversedBy="rentals")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $ownerId;
-
-    /**
      * @ORM\ManyToOne(targetEntity=RentalType::class, inversedBy="rentals")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -55,6 +49,12 @@ class Rentals
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="rentalId")
      */
     private $reservations;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Owners::class, inversedBy="rental")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ownerId;
 
     public function __construct()
     {
@@ -114,18 +114,6 @@ class Rentals
         return $this;
     }
 
-    public function getOwnerId(): ?Owners
-    {
-        return $this->ownerId;
-    }
-
-    public function setOwnerId(?Owners $ownerId): self
-    {
-        $this->ownerId = $ownerId;
-
-        return $this;
-    }
-
     public function getTypeId(): ?RentalType
     {
         return $this->typeId;
@@ -164,6 +152,18 @@ class Rentals
                 $reservation->setRentalId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOwnerId(): ?Owners
+    {
+        return $this->ownerId;
+    }
+
+    public function setOwnerId(?Owners $ownerId): self
+    {
+        $this->ownerId = $ownerId;
 
         return $this;
     }

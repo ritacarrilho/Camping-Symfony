@@ -1,0 +1,46 @@
+ <div class="container justify-content-md">
+ {# {% for message in app.flashes('success') %}
+    <div class="row d-flex flex-row justify-content mb-2">
+        <div class="alert alert-success">{{ message }}</div>
+    </div>
+{% endfor %} #}
+ <div class="row justify-content-center">
+    {% for rental in rentals %}
+        <div class="card col-3 m-1">
+        <img class="card-img-top rounded mt-3" src="utl({{ rental.picture }}) " alt="Card image cap"
+        style="width: auto; height: 165px;">
+            <div class="card-body">
+                <h4 class="card-title">
+                    {{ rental.title }}
+                </h4>
+                <h6 class="card-text">
+                    {# {{ rental.destiny }} #}
+                </h6>
+                <p class="card-text">
+                    {{ rental.reference }} €
+                </p>
+                <p class="card-text">
+                    {{ rental.description }}
+                </p>
+            </div>
+            {# <span class="float-end d-flex flex-row justify-content-between mb-2"> 
+                {# make a edit button for each voyage 
+                <a href="{{ path("add_voyages", {id: rental.id}) }}" 
+                    class="btn btn-outline-warning btn-sm"
+                    data-bs-toggle = "tooltip"
+                    data-bs-placement = "top"
+                    title="{{ rental.name }}">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>#}
+
+                 {# make a delete button for each voyage
+                <form action="{{ path("app_deleteRental", {id: rental.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this rental?')" class="ms-2">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete'~rental.id) }}">
+                    <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+                </form>
+
+            </span> #}
+        </div>
+    {% endfor %}
+</div>
+</div>

@@ -47,11 +47,11 @@ class Owners
     /**
      * @ORM\OneToMany(targetEntity=Rentals::class, mappedBy="ownerId")
      */
-    private $rentals;
+    private $rental;
 
     public function __construct()
     {
-        $this->rentals = new ArrayCollection();
+        $this->rental = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -119,18 +119,27 @@ class Owners
         return $this;
     }
 
+    public function getFullName() {
+        return $this->getFirstName(). " " . $this->getLastName();
+    }
+
+    public function getDateString(): string
+    {
+        return date_format($this->getEndDate(), "jS F Y");
+    }
+
     /**
      * @return Collection<int, Rentals>
      */
-    public function getRentals(): Collection
+    public function getRental(): Collection
     {
-        return $this->rentals;
+        return $this->rental;
     }
 
     public function addRental(Rentals $rental): self
     {
-        if (!$this->rentals->contains($rental)) {
-            $this->rentals[] = $rental;
+        if (!$this->rental->contains($rental)) {
+            $this->rental[] = $rental;
             $rental->setOwnerId($this);
         }
 
@@ -139,7 +148,7 @@ class Owners
 
     public function removeRental(Rentals $rental): self
     {
-        if ($this->rentals->removeElement($rental)) {
+        if ($this->rental->removeElement($rental)) {
             // set the owning side to null (unless already changed)
             if ($rental->getOwnerId() === $this) {
                 $rental->setOwnerId(null);
@@ -147,15 +156,6 @@ class Owners
         }
 
         return $this;
-    }
-
-    public function getFullName() {
-        return $this->getFirstName(). " " . $this->getLastName();
-    }
-
-    public function getDateString(): string
-    {
-        return date_format($this->getEndDate(), "jS F Y");
     }
     
 }
