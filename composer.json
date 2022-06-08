@@ -16,6 +16,7 @@
         "symfony/dotenv": "*",
         "symfony/flex": "^1.17|^2",
         "symfony/framework-bundle": "*",
+        "symfony/password-hasher": "^5.4",
         "symfony/proxy-manager-bridge": "5.4.*",
         "symfony/runtime": "*",
         "symfony/security-bundle": "^5.4",

@@ -1,0 +1,49 @@
+    <section class="mt-3 container">
+        <span class="float-end">
+            <a href="{{ path("app_home") }}" class="btn btn-success btn-sm">Add</a>
+        </span> 
+
+        <h2 style="color: #11663f">Our Partners</h2>
+            {# <div class="col-sm-9">{% for message in app.flashes('success') %}
+            
+                <div class="row d-flex flex-row justify-content mb-2">
+                    <div class="alert alert-success">{{ message }}</div>
+                </div> 
+            {% endfor %}#}
+        <ul class="list-group" id="list-tab" role="tablist">
+            {% for owner in owners %}
+                <li class="list-group-item">   
+                    {# <span class="float-end d-flex flex-row justify-content-between"> 
+                        make a edit button for each author
+                        <a href="{{ path("app_newAuthor", {id: author.id}) }}" 
+                            class="btn btn-outline-warning btn-sm"
+                            data-bs-toggle = "tooltip"
+                            data-bs-placement = "top"
+                            title="{{ author.fullname }}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        make a delete button for each author 
+                        <form action="{{ path("app_deleteAuthor", {id: author.id}) }}" method="post" onsubmit="return confirm('Are you sure ?')" class="ms-2">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete'~author.id) }}">
+                            <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                    </span>
+                    <img src=
+                        {% if author.imageFile is same as('default.jpg') %}
+                            "images/default.jpg"
+                        {% else %}
+                            "{{ vich_uploader_asset(author, 'imageFile') }}" 
+                        {% endif %}
+                    width="25px"> #}
+        
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1" style="color: #11663f">{{ owner.fullName }}</h5>
+                    </div>
+                    {# <p class="mb-1">{{ owner.getRentals['name'] }}</p> #}
+                    <small><strong>Address: </strong>{{ owner.address }}</small><br>
+                    <small><strong>Contract Number: </strong>{{ owner.contractNumber }}</small><br>
+                    <small><strong>Contract End: </strong>{{ owner.getDateString }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>

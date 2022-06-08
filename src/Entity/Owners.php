@@ -148,4 +148,14 @@ class Owners
 
         return $this;
     }
+
+    public function getFullName() {
+        return $this->getFirstName(). " " . $this->getLastName();
+    }
+
+    public function getDateString(): string
+    {
+        return date_format($this->getEndDate(), "jS F Y");
+    }
+    
 }

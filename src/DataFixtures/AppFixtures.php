@@ -6,11 +6,23 @@ use App\Entity\Owners;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\RentalType;
+use App\Entity\User;
 use App\Entity\Services;
 use Faker;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+     /**
+     * @var
+     */
+    private $pass_hasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->pass_hasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
         // $product = new Product();
@@ -70,7 +82,9 @@ class AppFixtures extends Fixture
 // PARTNERS/OWNERS
     public function loadPartners($manager, $faker)
     {
-        for($i=0; $i < 10; $i++) {
+        $partners_number = 10;
+
+        for($i=0; $i < $partners_number; $i++) {
             $partner = new Owners();
             $partner->setFirstName($faker->firstName)
                     ->setLastName($faker->lastName)
@@ -78,22 +92,20 @@ class AppFixtures extends Fixture
                     ->setContractNumber(rand())
                     ->setEndDate($faker->dateTimeBetween('now', '+5 years'));
         
+            $this->addReference('partner-' . $i, $partner);
+
             $manager->persist($partner);
         }
-    }
-
-// USERS
-public function loadUsers($manager, $faker)
-{
-    for($i=0; $i < 10; $i++) {
-        $partner = new Owners();
-        $partner->setFirstName($faker->firstName)
-                ->setLastName($faker->lastName)
-                ->setAddress($faker->address)
-                ->setContractNumber(rand())
-                ->setEndDate($faker->dateTimeBetween('now', '+5 years'));
     
-        $manager->persist($partner);
-    }
-}
+// USERS - relation one to one
+        for($j=0; $j < $partners_number; $j++) {
+            $user = new User();
+            $user->setEmail($faker->email)
+                ->setRole("ROLE_USER")
+                ->setPassword($this->pass_hasher->hashPassword($user, $faker->password))
+                ->setOwnerId($this->getReference(('partner-'. $j)));
+                
+                $manager->persist( $user);  
+        }   
+    } 
 }
