@@ -119,6 +119,7 @@ class Owners
         return $this;
     }
 
+    // FullName format
     public function getFullName() {
         return $this->getFirstName(). " " . $this->getLastName();
     }

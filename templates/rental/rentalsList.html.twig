@@ -7,20 +7,27 @@
  <div class="row justify-content-center">
     {% for rental in rentals %}
         <div class="card col-3 m-1">
-        <img class="card-img-top rounded mt-3" src="utl({{ rental.picture }}) " alt="Card image cap"
+        <img class="card-img-top rounded mt-3" src="images/{{ rental.picture }}" alt="Card image cap"
         style="width: auto; height: 165px;">
             <div class="card-body">
                 <h4 class="card-title">
                     {{ rental.title }}
                 </h4>
                 <h6 class="card-text">
-                    {# {{ rental.destiny }} #}
+                {% if rental.typeId.label is not same as 'space'%}
+                    {{ rental.typeId.capacity }} <i class="fa-solid fa-user-large"></i>
+                {% else %}
+                    {{ rental.typeId.capacity }} m<sup>2</sup>
+                {% endif %}
                 </h6>
                 <p class="card-text">
-                    {{ rental.reference }} €
+                    {{ rental.typeId.dailyPrice }}€ per day
                 </p>
                 <p class="card-text">
                     {{ rental.description }}
+                </p>
+                <p class="card-text">
+                   <strong> Owner: </strong> {{ rental.ownerId.fullName }}
                 </p>
             </div>
             {# <span class="float-end d-flex flex-row justify-content-between mb-2"> 

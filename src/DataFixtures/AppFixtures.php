@@ -144,10 +144,6 @@ class AppFixtures extends Fixture
         $camping_mh = 20;
         $caravans = 10;
 
-        // $random_caravans = rand(0, 2);
-        // $random_mh = rand(3, 6);
-        // $random_spaces = rand(7, 8);
-
 // EMPLACEMENTS        
         for($i=0; $i < $emplacements_nb; $i++) {
             $emplacements = new Rentals();
@@ -157,7 +153,7 @@ class AppFixtures extends Fixture
                     ->setTitle('Space '. $faker->word )
                     ->setDescription($faker->sentence)
                     ->setReference(rand(1, 30))
-                    ->setPicture($faker->imageUrl($width = 640, $height = 480));
+                    ->setPicture('tent.png');
 
             $manager->persist($emplacements);
         }
@@ -171,7 +167,7 @@ class AppFixtures extends Fixture
                     ->setTitle('Mobile-Home '. $faker->word )
                     ->setDescription($faker->sentence)
                     ->setReference(rand(31, 60))
-                    ->setPicture($faker->imageUrl($width = 640, $height = 480));
+                    ->setPicture('mobile.jpg');
 
             $manager->persist($mh_camping);
         }
@@ -185,7 +181,7 @@ class AppFixtures extends Fixture
                     ->setTitle('Mobile-Home '. $faker->word )
                     ->setDescription($faker->sentence)
                     ->setReference(rand(31, 60))
-                    ->setPicture($faker->imageUrl($width = 640, $height = 480));
+                    ->setPicture('mobile.jpg');
 
             $manager->persist($mh_private);
         }
@@ -199,7 +195,7 @@ class AppFixtures extends Fixture
                 ->setTitle('Caravan '. $faker->word )
                 ->setDescription($faker->sentence)
                 ->setReference(rand(61, 200))
-                ->setPicture($faker->imageUrl($width = 640, $height = 480));
+                ->setPicture('caravan.jpg');
 
             $manager->persist($caravans_camping);
         }

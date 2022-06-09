@@ -24,8 +24,8 @@ class RentalController extends AbstractController
      */
     public function index(): Response
     {
-        $rentals = $this->rentalRepo->findAll();
-        dump($rentals);
+        $rentals = $this->rentalRepo->findAllInfo();
+        // dump($rentals);
 
         return $this->render('rental/rentals.html.twig', [
             'rentals' => $rentals,

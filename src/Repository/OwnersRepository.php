@@ -39,6 +39,17 @@ class OwnersRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllInfo() 
+    {
+        return $this->createQueryBuilder('o')
+                    ->join('o.id', 'r.ownerId')
+                    ->addSelect('r')
+                    // ->join('r.ownerId', 'o')
+                    // ->addSelect('o')
+                    // ->orderBy('r.description', 'desc')
+                    ->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Owners[] Returns an array of Owners objects
 //     */

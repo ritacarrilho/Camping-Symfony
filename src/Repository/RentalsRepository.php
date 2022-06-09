@@ -39,6 +39,25 @@ class RentalsRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllInfo() 
+    {
+        return $this->createQueryBuilder('r')
+                    ->join('r.typeId', 't')
+                    ->addSelect('t')
+                    ->join('r.ownerId', 'o')
+                    ->addSelect('o')
+                    ->orderBy('r.description', 'desc')
+                    ->getQuery()->getResult();
+    }
+
+
+    public function findOwner()
+    {
+        return $this->createQueryBuilder('r')
+                    ->join('r.ownerId', 'o')
+                    ->addSelect('o')
+                    ->getQuery()->getResult();
+    }
 //    /**
 //     * @return Rentals[] Returns an array of Rentals objects
 //     */

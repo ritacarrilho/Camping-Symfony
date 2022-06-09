@@ -40,9 +40,22 @@
                         <h5 class="mb-1" style="color: #11663f">{{ owner.fullName }}</h5>
                     </div>
                     {# <p class="mb-1">{{ owner.getRentals['name'] }}</p> #}
-                    <small><strong>Address: </strong>{{ owner.address }}</small><br>
-                    <small><strong>Contract Number: </strong>{{ owner.contractNumber }}</small><br>
-                    <small><strong>Contract End: </strong>{{ owner.getDateString }}</small>
+                    <strong>Address: </strong><small>{{ owner.address }}</small><br>
+                    <strong>Contract Number: </strong> <small>{{ owner.contractNumber }}</small><br>
+                    <strong>Contract End: </strong><small>{{ owner.getDateString }}</small><br>
+                    <strong>Rentals: </strong><small>
+                    {% for rental in rentals %}
+                        {% if owner.id is same as rental.ownerId.id %}
+                        {% if rental.id < rentals|length - 1 %}
+                            {{ rental.title }}, 
+                        {% else %}
+                            {{ rental.title }}
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}</small>
+
+
+                    
                 </li>
             {% endfor %}
         </ul>
