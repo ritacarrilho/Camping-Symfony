@@ -1,5 +1,5 @@
- <div class="container justify-content-md">
- {# {% for message in app.flashes('success') %}
+ {#<div class="container justify-content-md">
+  {% for message in app.flashes('success') %}
     <div class="row d-flex flex-row justify-content mb-2">
         <div class="alert alert-success">{{ message }}</div>
     </div>
@@ -15,38 +15,40 @@
                 </h4>
                 <h6 class="card-text">
                 {% if rental.typeId.label is not same as 'space'%}
-                    {{ rental.typeId.capacity }} <i class="fa-solid fa-user-large"></i>
+                     <strong>Capacity: </strong>{{ rental.typeId.capacity }} <i class="fa-solid fa-user-large"></i><i class="fa-solid fa-user-large"></i>
                 {% else %}
-                    {{ rental.typeId.capacity }} m<sup>2</sup>
+                     <strong>Size:</strong> {{ rental.typeId.capacity }} m<sup>2</sup>
                 {% endif %}
                 </h6>
                 <p class="card-text">
-                    {{ rental.typeId.dailyPrice }}€ per day
+                    <strong>Price:</strong> {{ rental.typeId.dailyPrice }}€ per day
                 </p>
                 <p class="card-text">
-                    {{ rental.description }}
+                    <strong>Description:</strong> {{ rental.description }}
                 </p>
+
                 <p class="card-text">
-                   <strong> Owner: </strong> {{ rental.ownerId.fullName }}
+                   <strong> Owner:</strong>  {{ rental.ownerId.fullName }}
                 </p>
+
             </div>
-            {# <span class="float-end d-flex flex-row justify-content-between mb-2"> 
-                {# make a edit button for each voyage 
-                <a href="{{ path("add_voyages", {id: rental.id}) }}" 
+            <span class="float-end d-flex flex-row justify-content-between mb-2"> 
+                {# make a edit button for each voyage #}
+                <a href="{{ path("app_addRental", {id: rental.id}) }}" 
                     class="btn btn-outline-warning btn-sm"
                     data-bs-toggle = "tooltip"
                     data-bs-placement = "top"
-                    title="{{ rental.name }}">
+                    title="{{ rental.title }}">
                     <i class="fa-solid fa-pen-to-square"></i>
-                </a>#}
+                </a>
 
-                 {# make a delete button for each voyage
+                 {# make a delete button for each voyage #}
                 <form action="{{ path("app_deleteRental", {id: rental.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this rental?')" class="ms-2">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete'~rental.id) }}">
                     <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
                 </form>
 
-            </span> #}
+            </span>
         </div>
     {% endfor %}
 </div>

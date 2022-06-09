@@ -58,6 +58,17 @@ class RentalsRepository extends ServiceEntityRepository
                     ->addSelect('o')
                     ->getQuery()->getResult();
     }
+
+    public function findByType($type)
+    {
+        $db = $this->findAllInfo();
+
+        return $db->where('r.type < :type') // predicate
+                ->setParameter('type', $type)
+                ->getQuery()
+                ->getResult();
+    }
+
 //    /**
 //     * @return Rentals[] Returns an array of Rentals objects
 //     */

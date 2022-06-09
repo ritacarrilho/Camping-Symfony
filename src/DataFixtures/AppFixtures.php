@@ -94,7 +94,7 @@ class AppFixtures extends Fixture
                     ->setAddress($faker->address)
                     ->setContractNumber(0)
                     ->setEndDate($faker->dateTimeBetween('now', '+80 years'));
-        
+
         $this->addReference('partner-' . 1, $admin_owner);
 
         $manager->persist($admin_owner);

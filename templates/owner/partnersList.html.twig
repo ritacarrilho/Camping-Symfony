@@ -10,7 +10,7 @@
                     <div class="alert alert-success">{{ message }}</div>
                 </div> 
             {% endfor %}#}
-        <ul class="list-group" id="list-tab" role="tablist">
+        <ul class="list-group gap-2" id="list-tab" role="tablist">
             {% for owner in owners %}
                 <li class="list-group-item">   
                     {# <span class="float-end d-flex flex-row justify-content-between"> 
@@ -46,17 +46,17 @@
                     <strong>Rentals: </strong><small>
                     {% for rental in rentals %}
                         {% if owner.id is same as rental.ownerId.id %}
-                        {% if rental.id < rentals|length - 1 %}
-                            {{ rental.title }}, 
-                        {% else %}
-                            {{ rental.title }}
+                            {% if rental.id < rentals|length - 1 %}
+                                {{ rental.title }}, 
+                            {% else %}
+                                {{ rental.title }}
+                            {% endif %}
                         {% endif %}
+                    {% endfor %}</small><br>
+                    {% if owner.fullName is not same as 'Fabulous Camping'%}
+                       <small><strong>Delete Date: </strong>{{ owner.getDateString|date_modify("+1 year")|date("jS F Y") }}</small>    
                     {% endif %}
-                    {% endfor %}</small>
-
-
-                    
-                </li>
-            {% endfor %}
+                {% endfor %}
+            </li>
         </ul>
     </section>

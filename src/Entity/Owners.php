@@ -158,5 +158,4 @@ class Owners
 
         return $this;
     }
-    
 }

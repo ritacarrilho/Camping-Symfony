@@ -1,0 +1,20 @@
+{%extends "base.html.twig" %} 
+{% block title %}Our Rentals{% endblock %}
+
+{% block body %}
+    <div>        
+        {{ include("template_part/menu.html.twig", {pp: 'menu'} )}}
+    </div>
+
+    <div class="container mt-3">  
+    <h2>Add a new Rental</h2> 
+        {{ form_start(form)}} 
+        {{ form_rest(form)}}
+        <div class="row text-center">
+            <button type="submit" class="btn btn-success btn-sm">Save</button>
+        </div>
+
+        {{ form_end(form)}} 
+</div>
+{{ include("template_part/footer.html.twig", {pp: 'footer'} )}}
+{% endblock %}
