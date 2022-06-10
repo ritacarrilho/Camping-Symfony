@@ -52,9 +52,8 @@ class OwnersRepository extends ServiceEntityRepository
 
     public function orderLabel() {
         return $this->createQueryBuilder('o')
-                    ->orderBy('a.firstName', 'ASC');
+                    ->orderBy('o.firstName', 'ASC');
     }
-
 
 //    /**
 //     * @return Owners[] Returns an array of Owners objects

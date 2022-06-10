@@ -114,4 +114,14 @@ class RentalType
 
         return $this;
     }
+
+    public function getLabelCapacity(): string
+    {
+        if($this->getLabel() !== 'space') {
+            return $this->getLabel() . ' ' .$this->getCapacity() . ' person';
+        }
+        else {
+            return $this->getLabel() . ' ' .$this->getCapacity() . ' m2'; 
+        }
+    }
 }

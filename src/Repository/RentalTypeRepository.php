@@ -39,6 +39,15 @@ class RentalTypeRepository extends ServiceEntityRepository
         }
     }
 
+    public function orderLabel() {
+        return $this->createQueryBuilder('r')
+                    ->orderBy('r.label', 'ASC');
+    }
+
+    public function orderCapacity() {
+        return $this->createQueryBuilder('r')
+                    ->orderBy('r.capacity', 'ASC');
+    }
 //    /**
 //     * @return RentalType[] Returns an array of RentalType objects
 //     */

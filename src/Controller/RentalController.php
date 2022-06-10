@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Owners;
 use App\Entity\Rentals;
-use App\Entity\RentalType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,11 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\RentalsRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Form\RentalTypeForm;
-use App\Form\OwnerType;
-use App\Form\RentalsType;
-use App\Repository\OwnersRepository;
-use App\Repository\RentalTypeRepository;
-
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 class RentalController extends AbstractController
 {
     /**
@@ -24,22 +19,9 @@ class RentalController extends AbstractController
      */
     private $rentalRepo;
 
-    /**
-     * @var OwnersRepository
-     */
-    private $ownerRepo;    
-    
-    /**
-    * @var RentalTypeRepository
-    */
-   private $rentalTypeRepo;
-
-    public function __construct(RentalsRepository $rentalRepository, OwnersRepository $ownerRepository, RentalTypeRepository $rentalTypeRepository) 
+    public function __construct(RentalsRepository $rentalRepository) 
     { 
         $this->rentalRepo = $rentalRepository;
-        $this->ownerRepo = $ownerRepository;
-        $this->rentalTypeRepo = $rentalTypeRepository;
-
     }
 
     /**
@@ -84,9 +66,9 @@ class RentalController extends AbstractController
             
             $em->persist($rental); // hydrate form data into the object
 
-
             $em->flush(); // flush data into DB
 
+            $this->addFlash('success', 'You have added a new rental.');
             return $this->redirectToRoute("app_rental"); // redirection towards the rentals list
         }
 

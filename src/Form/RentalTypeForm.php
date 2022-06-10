@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Owners;
 use App\Entity\Rentals;
-use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -13,6 +12,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Repository\OwnersRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Repository\RentalTypeRepository;
+use App\Entity\RentalType;
+
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class RentalTypeForm extends AbstractType
 {
@@ -25,14 +28,49 @@ class RentalTypeForm extends AbstractType
             ->add('picture')
             ->add('ownerId', EntityType::class, 
             [
-                'label' => 'Owner\'s name',
+                'label' => 'Partners\'s name',
                 'query_builder' => function(OwnersRepository $ownerRepo) { 
                     return $ownerRepo->orderLabel();
-                }
-
+                },
+                'class' => Owners::class,
+                'choice_label' => function(Owners $ownerRepo) { 
+                    return $ownerRepo->getFullName();
+                },
+                'expanded' => false,
+                'multiple' => false,
+                'required' => true
             ])
-            ->add('typeId', RentalsType::class)
-            ->add('submit', SubmitType::class, ['label' => 'Save' ]);
+            ->add('typeId', EntityType::class,
+            [
+                'label' => 'Type\'s label',
+                'query_builder' => function(RentalTypeRepository $rentalTypeRepo) { 
+                    return $rentalTypeRepo->orderLabel();
+                },
+                'class' => RentalType::class,
+                'choice_label' => function(RentalType $rentalTypeRepo) { 
+                    return $rentalTypeRepo->getLabelCapacity();
+                },
+                'expanded' => false,
+                'multiple' => false,
+                'required' => true
+            ])
+            // [
+            //     'label' => 'Capacity',
+            //     'query_builder' => function(RentalTypeRepository $rentalTypeRepo) { 
+            //         return $rentalTypeRepo->orderCapacity();
+            //     },
+            //     'class' => RentalType::class,
+            //     'choice_label' => function(RentalType $rentalTypeRepo) { 
+            //         return $rentalTypeRepo->getLabelCapacity();
+            //     },
+            //     'expanded' => false,
+            //     'multiple' => false,
+            //     'required' => true
+            // ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Save',
+                // 'class' => 'btn btn-success btn-sm'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
