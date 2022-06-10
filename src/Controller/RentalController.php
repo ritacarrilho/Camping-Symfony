@@ -64,6 +64,18 @@ class RentalController extends AbstractController
         // dump($types);
         // dump($capacities);
 
+        $all_types = $this->rentalTypeRepo->findCategories();
+
+        $types_filtred = [];
+
+        for($i=0; $i < count($all_types); $i++ ) {
+            if( $all_types[$i] !== $all_types[$i - 1]->value) {
+                array_push($types_filtred, [$i]);
+            }
+        }
+//TODO: filter labels to display only one tu=ime each label
+        dump($types_filtred);
+
         return $this->render("rental/rentalType.html.twig", [
             "rentals" => $rentals,
             "types" => $types,

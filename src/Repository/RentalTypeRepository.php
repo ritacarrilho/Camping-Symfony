@@ -57,6 +57,12 @@ class RentalTypeRepository extends ServiceEntityRepository
                     ->getQuery()->getResult();
     }
 
+    public function findCategories()
+    {
+        return $this->select('t.label')
+        ->from('t')->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return RentalType[] Returns an array of RentalType objects
 //     */
