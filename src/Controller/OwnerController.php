@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\OwnersRepository;
 use App\Repository\RentalsRepository;
 use App\Entity\Owners;
-use App\Form\OwnerType;
+use App\Form\PartnerType;
 
 class OwnerController extends AbstractController
 {
@@ -46,31 +46,54 @@ class OwnerController extends AbstractController
         ]);
     }
 
-    //     /**
-    //  * @Route("/addRental/{id}", name="app_addOwner", methods={"GET", "POST"}, requirements = {"id": "\d+"})
-    //  */
-    // public function addOwner(int $id = -1, Request $request, ManagerRegistry $manager)
-    // {
-    //     $owner = ($id > 0 ) ? ($this->ownerRepo->find($id)) : new Owners();
+    /**
+     * @Route("/addOwner/{id}", name="app_addOwner", methods={"GET", "POST"}, requirements = {"id": "\d+"})
+     */
+    public function addOwner(int $id = -1, Request $request, ManagerRegistry $manager)
+    {
+        $owner = ($id > 0 ) ? ($this->ownersRepo->find($id)) : new Owners();
 
-    //     $owner_form = $this->createForm(OwnerType::class, $owner);
+        $owner_form = $this->createForm(PartnerType::class, $owner);
 
-    //     $owner_form->handleRequest($request);
+        $owner_form->handleRequest($request);
 
-    //     // dump($owner_form);
-        
-    //     if ($owner_form->isSubmitted() && $owner_form->isValid()) { // verify if the form was submited by get or post and if the fields where correctly filled
-    //         $em = $manager->getManager();
+        if ($owner_form->isSubmitted() && $owner_form->isValid()) { // verify if the form was submited by get or post and if the fields where correctly filled
+            $em = $manager->getManager();
             
-    //         $em->persist($owner); // hydrate form data into the object
+            $em->persist($owner); // hydrate form data into the object
 
-    //         $em->flush(); // flush data into DB
+            $em->flush(); // flush data into DB
 
-    //         return $this->redirectToRoute("app_rental"); // redirection towards the rentals list
-    //     }
+            $this->addFlash('success', 'You have added a new partner.');
+            return $this->redirectToRoute("app_owner"); // redirection towards the rentals list
+        }
 
-    //     return $this->render('form/editRental.html.twig', [
-    //         'form' => $owner_form->createView()
-    //     ]);
-    // }
+        return $this->render('form/addOwner.html.twig', [
+            'form' => $owner_form->createView(), 
+        ]);
+    }
+
+    /**
+     * @Route("/deleteOwner/{id}", name="app_deleteOwner", methods={"POST"}, requirements={"id": "\d+"})
+     * @param int $id
+     * @return void
+     */
+    public function deleteRental(int $id = -1, Request $request, ManagerRegistry $managerRegistry) // method get recovers the form click and the method post recovers the form submition | id = -1 in case there is no id passed
+    { 
+        // verify if token is valid
+        if($this->isCsrfTokenValid('delete'.$id, $request->get('_token'))) {
+            $em = $managerRegistry->getManager();
+
+            $owner = $this->ownersRepo->find($id);
+
+            $em->remove($owner);
+            $em->flush();
+            $this->addFlash('success', 'You have deleted the partner.');
+
+            return $this->redirectToRoute("app_owner");
+
+        } else {
+            return new Response("<h1>Wrong request !</h1>");
+        }
+    }
 }

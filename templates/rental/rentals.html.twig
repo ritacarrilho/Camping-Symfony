@@ -10,7 +10,7 @@
         <span class="float-end">
             <a href="{{ path('app_addRental') }}" class="btn btn-success btn-sm">Add</a>
         </span>
-    <h2 class="mt-3">Our Rentals</h2>
+        <h2 class="mt-3">Our Rentals</h2>
 
 
 {# 
@@ -18,7 +18,7 @@
             <a href="{{ path("app_filterType") }}" class="btn btn-sm btn-primary">Type</a>
         </div> #}
 
-    {{ include("rental/rentalsList.html.twig", {pp: 'rentals'} )}}
+        {{ include("rental/rentalsList.html.twig", {pp: 'rentals'} )}}
 
     </div>    
 

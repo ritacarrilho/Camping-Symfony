@@ -92,7 +92,7 @@ class RentalController extends AbstractController
 
             $em->remove($rental);
             $em->flush();
-            $this->addFlash('success', 'You have deleted the author.');
+            $this->addFlash('success', 'You have deleted the rental.');
 
             return $this->redirectToRoute("app_rental");
 

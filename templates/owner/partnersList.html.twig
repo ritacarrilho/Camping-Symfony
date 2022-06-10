@@ -1,62 +1,51 @@
-    <section class="mt-3 container">
-        <span class="float-end">
-            <a href="{{ path("app_home") }}" class="btn btn-success btn-sm">Add</a>
-        </span> 
+<section class="mt-3 container">
+    {# success message #}
+    {% for message in app.flashes('success') %}
+        <div class="row d-flex flex-row justify-content mb-2">
+            <div class="alert alert-success">{{ message }}</div>
+        </div> 
+    {% endfor %}
 
-        <h2 style="color: #11663f">Our Partners</h2>
-            {# <div class="col-sm-9">{% for message in app.flashes('success') %}
-            
-                <div class="row d-flex flex-row justify-content mb-2">
-                    <div class="alert alert-success">{{ message }}</div>
-                </div> 
-            {% endfor %}#}
-        <ul class="list-group gap-2" id="list-tab" role="tablist">
-            {% for owner in owners %}
-                <li class="list-group-item">   
-                    {# <span class="float-end d-flex flex-row justify-content-between"> 
-                        make a edit button for each author
-                        <a href="{{ path("app_newAuthor", {id: author.id}) }}" 
-                            class="btn btn-outline-warning btn-sm"
-                            data-bs-toggle = "tooltip"
-                            data-bs-placement = "top"
-                            title="{{ author.fullname }}">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                        make a delete button for each author 
-                        <form action="{{ path("app_deleteAuthor", {id: author.id}) }}" method="post" onsubmit="return confirm('Are you sure ?')" class="ms-2">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete'~author.id) }}">
-                            <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
-                        </form>
-                    </span>
-                    <img src=
-                        {% if author.imageFile is same as('default.jpg') %}
-                            "images/default.jpg"
-                        {% else %}
-                            "{{ vich_uploader_asset(author, 'imageFile') }}" 
-                        {% endif %}
-                    width="25px"> #}
+    <ul class="list-group gap-2" id="list-tab" role="tablist">
+        {% for owner in owners %}
+            <li class="list-group-item">   
+                <span class="float-end d-flex flex-row justify-content-between"> 
+                    {# edit button for each author #}
+                    <a href="{{ path("app_addOwner", {id: owner.id}) }}" 
+                        class="btn btn-outline-warning btn-sm"
+                        data-bs-toggle = "tooltip"
+                        data-bs-placement = "top"
+                        title="{{ owner.fullname }}">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    {# delete button for each author  #}
+                    <form action="{{ path("app_deleteOwner", {id: owner.id}) }}" method="post" onsubmit="return confirm('Are you sure ?')" class="ms-2">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete'~owner.id) }}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+                    </form>
+                </span>
         
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1" style="color: #11663f">{{ owner.fullName }}</h5>
-                    </div>
-                    {# <p class="mb-1">{{ owner.getRentals['name'] }}</p> #}
-                    <strong>Address: </strong><small>{{ owner.address }}</small><br>
-                    <strong>Contract Number: </strong> <small>{{ owner.contractNumber }}</small><br>
-                    <strong>Contract End: </strong><small>{{ owner.getDateString }}</small><br>
-                    <strong>Rentals: </strong><small>
-                    {% for rental in rentals %}
-                        {% if owner.id is same as rental.ownerId.id %}
-                            {% if rental.id < rentals|length - 1 %}
-                                {{ rental.title }}, 
-                            {% else %}
-                                {{ rental.title }}
-                            {% endif %}
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1" style="color: #11663f">{{ owner.fullName }}</h5>
+                </div>
+                {# <p class="mb-1">{{ owner.getRentals['name'] }}</p> #}
+                <strong>Address: </strong><small>{{ owner.address }}</small><br>
+                <strong>Contract Number: </strong> <small>{{ owner.contractNumber }}</small><br>
+                <strong>Contract End: </strong><small>{{ owner.getDateString }}</small><br>
+                <strong>Rentals: </strong><small>
+                {% for rental in rentals %}
+                    {% if owner.id is same as rental.ownerId.id %}
+                        {% if rental.id < rentals|length - 1 %}
+                            {{ rental.title }}, 
+                        {% else %}
+                            {{ rental.title }}
                         {% endif %}
-                    {% endfor %}</small><br>
-                    {% if owner.fullName is not same as 'Fabulous Camping'%}
-                       <small><strong>Delete Date: </strong>{{ owner.getDateString|date_modify("+1 year")|date("jS F Y") }}</small>    
                     {% endif %}
-                {% endfor %}
-            </li>
-        </ul>
-    </section>
+                {% endfor %}</small><br>
+                {% if owner.fullName is not same as 'Fabulous Camping'%}
+                   <small><strong>Delete Date: </strong>{{ owner.getDateString|date_modify("+1 year")|date("jS F Y") }}</small>    
+                {% endif %}
+            {% endfor %}
+        </li>
+    </ul>
+</section>
