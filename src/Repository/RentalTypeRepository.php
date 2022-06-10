@@ -48,6 +48,15 @@ class RentalTypeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')
                     ->orderBy('r.capacity', 'ASC');
     }
+
+    public function findAllInfo() 
+    {
+        return $this->createQueryBuilder('t')
+                    ->join('t.id', 'r')
+                    ->addSelect('r')
+                    ->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return RentalType[] Returns an array of RentalType objects
 //     */

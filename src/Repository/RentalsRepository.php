@@ -50,7 +50,6 @@ class RentalsRepository extends ServiceEntityRepository
                     ->getQuery()->getResult();
     }
 
-
     public function findOwner()
     {
         return $this->createQueryBuilder('r')
@@ -59,15 +58,38 @@ class RentalsRepository extends ServiceEntityRepository
                     ->getQuery()->getResult();
     }
 
-    public function findByType($type)
+    private function base() 
     {
-        $db = $this->findAllInfo();
-
-        return $db->where('r.type < :type') // predicate
-                ->setParameter('type', $type)
-                ->getQuery()
-                ->getResult();
+        return $this->createQueryBuilder('r')
+                    ->join('r.typeId', 'rt')
+                    ->addSelect('rt');
     }
+
+    public function findByType($type, $capacity): array
+    {
+
+        return $this->createQueryBuilder('r') 
+        ->join('r.typeId', 'rt')
+        ->addSelect('rt')
+        ->where('rt.label = :type')
+        ->setParameter('type', $type)
+        // ->andWhere('rt.capacity = :capacity')
+        // ->setParameters(['type'=> $type,'capacity'=> $capacity])
+        ->getQuery()
+        ->getResult();
+    }
+
+
+    // public function findByType($label)
+    // {
+    //     $db = $this->findAllInfo();
+
+    //     dump($db);
+    //     return $db->where('t.label < :label') 
+    //             ->setParameter('label', $label)
+    //             ->getQuery()
+    //             ->getResult();
+    // }
 
 //    /**
 //     * @return Rentals[] Returns an array of Rentals objects

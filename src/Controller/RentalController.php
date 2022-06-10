@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Rentals;
+use App\Entity\RentalType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\RentalsRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Form\RentalTypeForm;
+use App\Repository\RentalTypeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 class RentalController extends AbstractController
@@ -19,9 +21,16 @@ class RentalController extends AbstractController
      */
     private $rentalRepo;
 
-    public function __construct(RentalsRepository $rentalRepository) 
+        /**
+     * @var RentalTypeRepository
+     */
+    private $rentalTypeRepo;
+
+    public function __construct(RentalsRepository $rentalRepository, RentalTypeRepository $rentalTyperRepository) 
     { 
+        $this->rentalTypeRepo = $rentalTyperRepository;
         $this->rentalRepo = $rentalRepository;
+
     }
 
     /**
@@ -30,24 +39,38 @@ class RentalController extends AbstractController
     public function rentals(): Response
     {
         $rentals = $this->rentalRepo->findAllInfo();
+        // dump($rentals);
 
-        return $this->render('rental/rentals.html.twig', [
-            'rentals' => $rentals,
+        $types = $this->rentalTypeRepo->findAll();
+        // dump($types);
+        
+        return $this->render("rental/rentals.html.twig", [
+            "rentals" => $rentals,
+            "types" => $types
         ]);
     }
 
-    // /**
-    //  * @Route("/rentalType/{type}", name="app_filterType", methods={"GET"})
-    //  * @return Response
-    //  */
-    // public function listByType($type): Response
-    // {
-    //     $rentals = $this->rentalRepo->findByType($type);
+    /**
+     * @Route("/rentalType", name="app_filterType", methods={"GET", "POST"})
+     * @return Response
+     */
+    public function listRentalsByType(Request $request)
+    {
 
-    //     return $this->render('rental/rentalType.html.twig', [
-    //         'rentals' => $rentals,
-    //     ]);
-    // }
+        $types = $request->get('type');
+        $capacities = $request->get('capacity');
+        $rentals = $this->rentalRepo->findByType($types, $capacities);
+        $labels = $this->rentalTypeRepo->findAll();
+        // dump($types);
+        // dump($capacities);
+
+        return $this->render("rental/rentalType.html.twig", [
+            "rentals" => $rentals,
+            "types" => $types,
+            'capacities' => $capacities,
+            'labels' => $labels
+        ]);
+    }
 
 
     /**
