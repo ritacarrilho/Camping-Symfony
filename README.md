@@ -21,7 +21,7 @@ Project created with:
 * Lando
 
 # Info
-## Services: 
+### Services: 
 * 50 mobile-homes (30 belong to private owners) 
 * 10 caravans 
 * 30 places (for tents)  
