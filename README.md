@@ -71,12 +71,13 @@ Access to all services and infrastructures
 See all rents and available dates 
 Add a new mobile-home (with photo) 
 Able to see all invoices and delete them 
+
 Access to client's information: 
-    one week after the rent end date 
-    If the client agrees one year after the rent end date (send an alert message) 
-    Delete invoices 3 years after their creation (send an alert message 
-    Access to all owner’s invoices 
-    Owner’s information must be deleted a year after the end of the contract with the camping company 
+one week after the rent end date 
+If the client agrees one year after the rent end date (send an alert message) 
+Delete invoices 3 years after their creation (send an alert message 
+Access to all owner’s invoices 
+Owner’s information must be deleted a year after the end of the contract with the camping company 
 
 ## Owner Access:  
 List of rentals (rents planning) 
@@ -97,10 +98,11 @@ See disponibility and planning
 Add and edit rentals 
 Access to invoices and be able to cancel them 
 Access to invoices of each owner 
+
 Access to owner’s info: 
-    Alert to delete all owner’s info 1 week after the contract ends 
-    Alert to delete all owner’s info 1 year after the contract ends if owner agrees 
-    Alert to delete all invoices 3 years after their creation 
+Alert to delete all owner’s info 1 week after the contract ends 
+Alert to delete all owner’s info 1 year after the contract ends if owner agrees 
+Alert to delete all invoices 3 years after their creation 
 
 ## Owner 
 Features: 
