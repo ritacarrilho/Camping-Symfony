@@ -4,13 +4,14 @@
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Project](#project)
+* [Structure](#structure)
 * [Pages](#pages)
 
 # General Info
 Camping website with possibility to CRUD the partners, rentals and invoices. Generated fake data stored in Database.
 Project developed in Symfony and styled with Bootstrap. Dev environment: Docker and Lando.
 
-# Technologies:
+# Technologies
 Project created with:
 * HTML
 * Bootstrap
