@@ -3,12 +3,11 @@
 # Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
-* [Functionalities](#functionalities)
-* [Info](#info)
+* [Project](#project)
 * [Pages](#pages)
 
 # General Info
-Travelling agency website with possibility to CRUD the employees and the Trips. Generated fake data stored in Database.
+Camping website with possibility to CRUD the partners, rentals and invoices. Generated fake data stored in Database.
 Project developed in Symfony and styled with Bootstrap. Dev environment: Docker and Lando.
 
 # Technologies:
@@ -20,7 +19,7 @@ Project created with:
 * Docker
 * Lando
 
-# Info
+# Project
 ### Services: 
 * 50 mobile-homes (30 belong to private owners) 
 * 10 caravans 
