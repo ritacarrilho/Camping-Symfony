@@ -35,6 +35,8 @@
                 </p>
 
             </div>
+             
+            {% if is_granted('ROLE_ADMIN') %}
             <span class="float-end d-flex flex-row justify-content-between mb-2"> 
                 {# edit button for each rental #}
                 <a href="{{ path("app_addRental", {id: rental.id}) }}" 
@@ -50,8 +52,9 @@
                     <input type="hidden" name="_token" value="{{ csrf_token('delete'~rental.id) }}">
                     <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
                 </form>
-
             </span>
+            {% endif %}
+            
         </div>
     {% endfor %}
 </div>
