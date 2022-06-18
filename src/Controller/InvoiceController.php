@@ -17,4 +17,8 @@ class InvoiceController extends AbstractController
             'controller_name' => 'InvoiceController',
         ]);
     }
+
+    //TODO: route admin according to type of invoice
+    
 }
+

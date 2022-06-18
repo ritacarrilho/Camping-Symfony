@@ -12,6 +12,9 @@ use App\Repository\RentalsRepository;
 use App\Entity\Owners;
 use App\Form\PartnerType;
 
+/**
+ * @Route("/admin")
+ */
 class OwnerController extends AbstractController
 {
     /**

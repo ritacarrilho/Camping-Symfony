@@ -7,25 +7,33 @@ use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    /**
-     * @Route("/subscription", name="security_registration")
+     /**
+     * @var
      */
-    public function registration(Request $request, ManagerRegistry $manager, UserPasswordEncoderInterface $encoder) {
+    private $pass_hasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->pass_hasher = $passwordHasher;
+    }
+    /**
+     * @Route("/admin/subscription", name="security_registration")
+     */
+    public function registration(Request $request, ManagerRegistry $manager, UserPasswordHasherInterface $pass_hasher) {
         $user = new User();
 
         $form = $this->createForm(RegistrationType::class, $user); // bind the form and user
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $hash = $encoder->encodePassword($user, $user->getPassword()); // encode password before saving into DB
-            
-            $user->setPassword($hash);
+            // encode password before saving into DB
+            $user->setPassword($this->pass_hasher->hashPassword($user, $user->getPassword()));
             
             $em = $manager->getManager();
             $em->persist($user);
@@ -41,10 +49,25 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/login", name="security_login")
+     * @return void
      */
-    public function login() {
+    public function login(AuthenticationUtils $authenticationUtils) {
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUser = $authenticationUtils->getLastUsername();
+
         return $this->render('security/login.html.twig', [
-            
+            'lastUser' => $lastUser,
+            'error' => $error
         ]);
     }
+
+    /**
+     * @Route("/logout", name="security_logout")
+     * @return void
+     */
+    public function logout()
+    {
+        $this->redirectToRoute("app_home");
+    }
+
 }

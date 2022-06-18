@@ -1,8 +1,4 @@
 security:
-    encoders: 
-        App\Entity\User:
-            algorithm: bcrypt
-            cost: 12
     enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
@@ -27,20 +23,24 @@ security:
         #             toto: 
         #                 password: toto
         #                 roles: ROLE_USER 
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
             lazy: true
-            # provider: users_in_memory
+            provider: from_database
             # http_basic: true
-            form_login:
-                check_path: app_login
-                default_target_path: dashboard
 
-            # logout: 
-            #     path: /logout
+            form_login:
+                # login_path: security_login
+                check_path: security_login
+                default_target_path: app_home
+                
+            logout: 
+                path: /logout
              
 
             # activate different ways to authenticate

@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @method string getUserIdentifier()
  * @UniqueEntity(
  *  fields={"email"},
  *  message="This email exist already"
@@ -121,7 +122,7 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return [$this->getRole()]; // returns an array with the role of the entity
+        return [$this->getRole()];
     }
 
     public function getSalt()
@@ -131,17 +132,17 @@ class User implements UserInterface, \Serializable
 
     public function eraseCredentials()
     {
-    // TODO: Implement eraseCredentials() method. 
+        // TODO: Implement eraseCredentials() method.
     }
 
     public function getUsername()
     {
-        return $this->getEmail;
+        return $this->getEmail();
     }
 
     public function __call($name, $arguments)
     {
-    // TODO: Implement @method string getUserIdentifier() }
+        // TODO: Implement @method string getUserIdentifier()
     }
 
     public function serialize()
@@ -154,14 +155,8 @@ class User implements UserInterface, \Serializable
     }
 
     public function unserialize($data)
-    { // recovers the serielized data in serialize()
-        list($this->id, $this->email, $this->password) = 
+    {
+        list($this->id, $this->email, $this->password) =
             unserialize($data, ['allowed_classes' => false]);
     }
-
-    public function getUserIdentifier() 
-    {
-
-    }
-
 }

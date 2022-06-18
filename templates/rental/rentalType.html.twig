@@ -63,23 +63,6 @@
                 </p>
 
             </div>
-            {# <span class="float-end d-flex flex-row justify-content-between mb-2"> 
-                edit button for each rental
-                <a href="{{ path("app_addRental", {id: rental.id}) }}" 
-                    class="btn btn-outline-warning btn-sm"
-                    data-bs-toggle = "tooltip"
-                    data-bs-placement = "top"
-                    title="{{ rental.title }}">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </a>
-
-                 delete button for each rental
-                <form action="{{ path("app_deleteRental", {id: rental.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this rental?')" class="ms-2">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete'~rental.id) }}">
-                    <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
-                </form>
-
-            </span> #}
         </div>
     {% endfor %}
 </div>

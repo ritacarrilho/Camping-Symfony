@@ -23,6 +23,16 @@
 
     </head>
     <body>
+    {# if the user is authenticated, shows signout button #}
+    {# {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <span class="float-end">
+        <a href="{{ path("app_logout") }}" class="btn btn-sm btn-primary">
+            {{ app.user.fullName}}
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </a>
+    </span> 
+    {% endif %} #}
+
         {% block body %}{% endblock %}
 
         {% block footer %}{% endblock %}
