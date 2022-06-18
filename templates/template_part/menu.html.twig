@@ -11,10 +11,14 @@
         <a class="nav-link text-light" href="{{ path('app_home') }}">Home</a>
         <a class="nav-link text-light" href="{{ path('app_services') }}">Services</a>
         <a class="nav-link text-light" href="{{ path('app_rental') }}">Rentals</a>
-        {# {% if user.getRole is same as 'ROLE_ADMIN' %} #}
-          <a class="nav-link text-light" href="{{ path('app_invoice') }}">Invoices</a>
+        {% if is_granted('ROLE_ADMIN') %}
           <a class="nav-link text-light" href="{{ path('app_owner') }}">Partners</a> 
-        {# {% endif %} #}
+        {% endif %}
+
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+          <a class="nav-link text-light" href="{{ path('app_invoice') }}">Invoices</a>
+        {% endif %}
+
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
           <a class="nav-link text-light text-right" href="{{ path('security_logout') }}">Log Out</a>
         {% else %}
