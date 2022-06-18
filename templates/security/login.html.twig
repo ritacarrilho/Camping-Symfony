@@ -1,0 +1,32 @@
+{%extends "base.html.twig" %} 
+{% block title %}Log In{% endblock %}
+
+{% block body %}
+    <div>        
+        {{ include("template_part/menu.html.twig", {pp: 'menu'} )}}
+    </div>
+
+    <div class="container mt-3">  
+    {# success message #}
+    {# {% for message in app.flashes('success') %}
+        <div class="row d-flex flex-row justify-content mb-2">
+            <div class="alert alert-success">{{ message }}</div>
+        </div> 
+    {% endfor %} #}
+
+    <h2>LogIn</h2> 
+        {{ form_start(form)}} 
+        {{ form_rest(form)}} 
+
+        {# {{ form_row(form.email)}} 
+        {{ form_row(form.role)}} 
+        {{ form_row(form.password)}} 
+        {{ form_row(form.confirm_password)}}  #}
+
+        <div class="row text-center">
+            <button type="submit" class="btn btn-success btn-sm">Save</button>
+        </div>
+        {{ form_end(form)}} 
+</div>
+{{ include("template_part/footer.html.twig", {pp: 'footer'} )}}
+{% endblock %}

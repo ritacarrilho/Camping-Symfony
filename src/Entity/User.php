@@ -4,15 +4,17 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert; // allows to make a constraint to a propriety
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Owners;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(
+ *  fields={"email"},
+ *  message="This email exist already"
+ * ) 
  */
 class User implements UserInterface, \Serializable
 {
@@ -25,11 +27,13 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=200)
+     * Assert\Email
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min="8", minMessage="Your password must have 8 or more characters")
      */
     private $password;
 
@@ -37,6 +41,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=255)
      */
     private $role;
+
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="Your password must be the same")
+     */
+    private $confirm_password;
 
     /**
      * @ORM\OneToOne(targetEntity=Owners::class, cascade={"persist", "remove"})
@@ -84,6 +93,19 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
+
+    public function getConfirmPassword(): ?string
+    {
+        return $this->confirm_password;
+    }
+
+    public function setConfirmPassword(string $confirm_password): self
+    {
+        $this->confirm_password = $confirm_password;
+
+        return $this;
+    }
+
 
     public function getOwnerId(): ?Owners
     {

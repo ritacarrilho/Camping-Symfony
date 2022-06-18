@@ -74,7 +74,7 @@ class RentalController extends AbstractController
             }
         }
 //TODO: filter labels to display only one tu=ime each label
-        dump($types_filtred);
+        // dump($types_filtred);
 
         return $this->render("rental/rentalType.html.twig", [
             "rentals" => $rentals,
